@@ -1,0 +1,21 @@
+
+	/*
+	+--------------------------------------------------------------------------
+	|   FileBox - File Hosting & Sharing Script (v1.5)
+	|   =======================================================================
+	|   by ScriptsApart
+	|   (c) 2010 ScriptsApart
+	|   http://www.scriptsapart.com
+	|   =======================================================================
+	|   Web: http://www.scriptsapart.com
+	|   Email: support@scriptsapart.com
+	+--------------------------------------------------------------------------
+	|   > Developed On: 25th December 2010
+	+--------------------------------------------------------------------------
+	*/
+
+div.pagination {text-align:right;padding:10px 10px 10px 0;border-bottom:1px solid #ddd;background:#fafafa;}
+div.pagination a {	padding:2px 5px 2px 5px;margin-right:2px;border:1px solid #bbb;text-decoration:none;color:#333333;}
+div.pagination a:hover,div.pagination a:active {padding:2px 5px 2px 5px;margin-right:2px;border:1px solid #333333;}
+div.pagination span.current {padding:2px 5px 2px 5px;margin-right:2px;border:1px solid #e0e0e0;font-weight:bold;background-color:#aaa;color:#fff;}
+div.pagination span.disabled {padding:2px 5px 2px 5px;margin-right:2px;border:1px solid #f3f3f3;color:#ccc;}

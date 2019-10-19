@@ -1,0 +1,10 @@
+IndexIgnore *.jpg
+IndexIgnore *.gif
+IndexIgnore *.png
+IndexIgnore *.bmp
+IndexIgnore *.jpeg
+IndexIgnore *.php
+IndexIgnore *.inc.php
+IndexIgnore *.js
+IndexIgnore *.css
+
