@@ -56,6 +56,7 @@ function subheader($title, $css = "", $js = "", $cl = "")
         <META NAME="Description" CONTENT="<?php echo $description; ?>">
         <META NAME="Keywords" CONTENT="<?php echo $keywords; ?>">
         <META NAME="Author" CONTENT="Akshit Sethi">
+        <link type="text/css" rel="stylesheet" href="<?php echo $website; ?>/css/bootstrap.min.css"/>
         <link type="text/css" rel="stylesheet" href="<?php echo $website; ?>/css/default.css"/>
         <?php echo $css; // Additional CSS files for specific pages
         ?>
@@ -70,7 +71,7 @@ function subheader($title, $css = "", $js = "", $cl = "")
     <script>
         window.fbAsyncInit = function () {
             FB.init({
-                appId: 'f8c226475ed8a00773a0f44083ed9443',
+                appId: '1957805037655793',
                 status: true, // check login status
                 cookie: true, // enable cookies to allow the server to access the session
                 xfbml: true  // parse XFBML
@@ -92,7 +93,6 @@ function subheader($title, $css = "", $js = "", $cl = "")
             }, {perms: 'email'});
         }
     </script>
-<center>
     <div class="container">
     <div id="header">
         <div id="limitheader">

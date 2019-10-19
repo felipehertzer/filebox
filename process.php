@@ -46,6 +46,7 @@ subheader('Upload Details', '', '', 'upload'); ?>
         } else {
             if ($counter) {
                 while ($fetch_im = mysqli_fetch_array($query_im)) {
+                    var_dump($fetch_im);
                     echo "<table class='showlinks'><tr><td id='image'>";
                     if (($fetch_im['extension'] == "gif") || ($fetch_im['extension'] == "jpg") || ($fetch_im['extension'] == "jpeg") ||
                         ($fetch_im['extension'] == "png") || ($fetch_im['extension'] == "bmp") || ($fetch_im['extension'] == "pjpeg")) {
@@ -144,7 +145,7 @@ subheader('Upload Details', '', '', 'upload'); ?>
                                     $small_location = $sfolder . "/" . $fileLocation;
                                     $size = ceil($handle->file_src_size / 1024);
                                     $sql = mysqli_query($link, "INSERT INTO `files`(`name`, `location`, `small_location`, `extension`, `size`, `ip`, `date`, `userid`) VALUES('{$name_file}', '{$location}', '{$small_location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$userid}')") or die(mysqli_error($link));
-                                    $sql_id = mysqli_insert_id();
+                                    $sql_id = mysqli_insert_id($link);
                                     echo "<table class='showlinks'><tr><td id='image'><img src='{$website}/{$small_location}' /></td>";
                                     echo "<td><p class='highlight'><b><a href='{$website}/download.php?id={$sql_id}'>{$name_file}</a></b> has been uploaded</p>";
                                     echo "<table><tr><td><b>Link</b></td><td><input type='text' onclick=\"this.select();\" value=\"<a href='{$website}/download.php?id={$sql_id}'>{$website}/download.php?id={$sql_id}</a>\"></td></tr>";
@@ -163,7 +164,7 @@ subheader('Upload Details', '', '', 'upload'); ?>
                                     $size = ceil($handle->file_src_size / 1024);
                                     $name_file = $handle->file_src_name;
                                     $sql = mysqli_query($link, "INSERT INTO `files`(`name`, `location`, `extension`, `size`, `ip`, `date`, `userid`) VALUES('{$name_file}', '{$location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$userid}')") or die(mysqli_error($link));
-                                    $sql_id = mysqli_insert_id();
+                                    $sql_id = mysqli_insert_id($link);
                                     echo "<table class='showlinks'><tr><td id='image'><img src='{$website}/showicon.php?id={$extension}' /></td>";
                                     echo "<td><p class='highlight'><b><a href='{$website}/download.php?id={$sql_id}'>{$name_file}</a></b> has been uploaded</p>";
                                     echo "<table><tr><td><b>Link</b></td><td><input type='text' onclick=\"this.select();\" value=\"<a href='{$website}/download.php?id={$sql_id}'>{$website}/download.php?id={$sql_id}</a>\"></td></tr>";

@@ -68,6 +68,9 @@ class dbSession
 
         // start the session
         session_start();
+        $_SESSION['user'] = 'felipeaugustohertzer@live.com';
+        $_SESSION['pass'] = '123456';
+        var_dump($_SESSION);
     }
 
     /**
