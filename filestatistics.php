@@ -78,8 +78,8 @@
 	
 	$data_1 = "<graph caption='File Downloads on FileBox' xAxisName='7 days Report' yAxisName='No. of files' decimalPrecision='0' formatNumberScale='0'>";
 	$x = 0; for($i=0; $i < 7; $i++) {
-	$q = mysqli_query("SELECT COUNT(*) FROM `downloads` WHERE(`date`='{$date} {$month} {$year}') AND (`file_id`={$id})") or die(mysqli_error());
-	$n = mysqli_result($q, 0);
+	$q = mysqli_query($link, "SELECT COUNT(*) as count FROM `downloads` WHERE(`date`='{$date} {$month} {$year}') AND (`file_id`={$id})") or die(mysqli_error($link));
+	$n = mysqli_fetch_assoc($q)['count'];
     $data_1 .= "<set name='{$date} {$month}' value='{$n}' color='990000' />";
 	if($date == 1) { $date = $last;
 		if($month == "Jan") { $month = $previous; $year = $year - 1; }

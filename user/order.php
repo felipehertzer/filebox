@@ -132,8 +132,8 @@
 		 $mailsent = mail($adminemail, $subject, $message, $headers);
 		 
 		 $date = time(); $expires_on = $date + 2592000;
-		 $transaction_query = mysqli_query("INSERT INTO `transactions`(`amount`, `userid`, `date`, `expires_on`) VALUES({$p->ipn_data['payment_gross']}, {$p->ipn_data['custom']}, '{$date}', '{$expires_on}')") or die(mysqli_error());
-		 $make_premium = mysqli_query("UPDATE `members` SET `premium`=1 WHERE(`id`={$p->ipn_data['custom']})") or die(mysqli_error());
+		 $transaction_query = mysqli_query($link, "INSERT INTO `transactions`(`amount`, `userid`, `date`, `expires_on`) VALUES({$p->ipn_data['payment_gross']}, {$p->ipn_data['custom']}, '{$date}', '{$expires_on}')") or die(mysqli_error($link));
+		 $make_premium = mysqli_query($link, "UPDATE `members` SET `premium`=1 WHERE(`id`={$p->ipn_data['custom']})") or die(mysqli_error($link));
 		 }
 		 
       break;

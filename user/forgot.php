@@ -29,13 +29,13 @@
 	$resp = recaptcha_check_answer ($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
     if ($resp->is_valid) {
 		
-		$q = mysqli_query("SELECT * FROM `members` WHERE(email='{$email}')") or die(mysqli_error());
+		$q = mysqli_query($link, "SELECT * FROM `members` WHERE(email='{$email}')") or die(mysqli_error($link));
 		$n = mysqli_num_rows($q);
 		
 		if($n) {
 		$f = mysqli_fetch_array($q);	$uid = $f['id'];
 		$password = createRandomPassword();
-		$q = mysqli_query("UPDATE `members` SET `password` = '{$password}' WHERE `id`={$uid} LIMIT 1") or die(mysqli_error());
+		$q = mysqli_query($link, "UPDATE `members` SET `password` = '{$password}' WHERE `id`={$uid} LIMIT 1") or die(mysqli_error($link));
 		forgotpass_email($email, $password);
 		$err = "<div class='infobox'><p>{$lang[52]}</p></div>"; am_showForgot();
 		} else { $err = "<div class='errorbox'><p>{$lang[53]}</p></div>"; am_showForgot(); }

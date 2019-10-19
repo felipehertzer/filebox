@@ -25,7 +25,7 @@ include("init.php"); ?>
 <body>
 <?php if(isset($_GET["id"])) {
 			$id = htmlspecialchars(trim($_GET["id"]));
-			$q = mysqli_query("SELECT * FROM `files` WHERE(`id`={$id})") or die(mysqli_error());
+			$q = mysqli_query($link, "SELECT * FROM `files` WHERE(`id`={$id})") or die(mysqli_error($link));
 				if(mysqli_num_rows($q)) {
 					$f = mysqli_fetch_array($q);
 					$ext = $f['extension'];

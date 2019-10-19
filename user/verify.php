@@ -23,13 +23,13 @@
   if(isset($_GET['k'])) {
   $key = htmlspecialchars(trim($_GET['k']));
   if($key != "") {
-  $q = mysqli_query("SELECT * FROM `members` WHERE(`key`='{$key}')") or die(mysqli_error());
+  $q = mysqli_query($link, "SELECT * FROM `members` WHERE(`key`='{$key}')") or die(mysqli_error($link));
   $n = mysqli_num_rows($q);
 	if($n) {
 	$f = mysqli_fetch_array($q);
 	$verify = $f['verified'];
 	if($verify == 0) {
-	$update = mysqli_query("UPDATE `members` SET `verified`='1' WHERE(`key`='{$key}') LIMIT 1") or die(mysqli_error());
+	$update = mysqli_query($link, "UPDATE `members` SET `verified`='1' WHERE(`key`='{$key}') LIMIT 1") or die(mysqli_error($link));
 	echo "<center><div class='infobox' style='width:96%;'><p>{$lang[91]} <br/><small><a href='{$website}/user/login.php'>{$lang[92]}</a></small></div></center><br/><br/>";
 	} else { echo "<center><div class='errorbox' style='width:96%;'><p>{$lang[93]}</p></div></center><br/><br/>"; }
 	} else { echo "<center><div class='errorbox' style='width:96%;'><p>{$lang[94]}<br/><small>{$lang[44]} <a href='{$website}/static/contact.php'>{$lang[46]}</a>.</small></p></div></center><br/><br/>"; }

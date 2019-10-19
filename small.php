@@ -29,10 +29,10 @@
 	
 	if($id == "") { showUnknown(); }
 	else { $link = mysqli_connect(DB_SERVER, DB_USER, DB_PASSWORD);
-    if(!mysqli_select_db(DB_NAME)) die(mysqli_error());
+    if(!mysqli_select_db($link, DB_NAME)) die(mysqli_error($link));
          
     $q = "SELECT `location`, `small_location` FROM `files` WHERE (`id`={$id})";
-    if(!($result_set = mysqli_query($q))) die(mysqli_error());
+    if(!($result_set = mysqli_query($link, $q))) die(mysqli_error($link));
     $number = mysqli_num_rows($result_set);
       
     if($number)

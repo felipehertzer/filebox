@@ -16,12 +16,12 @@
 	*/
 	
 	/* Error reporting for the application. Set to error_reporting(E_ALL) for debugging. */
-	error_reporting(0);
+	error_reporting(E_ALL);
 	
 	/* Set the default timezone for the script. */
 	date_default_timezone_set('America/Sao_Paulo');
 	
-	@ini_set('display_errors', '0');
+	@ini_set('display_errors', '1');
 	@ini_set('memory_limit', '128M');
 	
 	/* Database inclusion and initialization for the application */

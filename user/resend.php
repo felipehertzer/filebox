@@ -28,14 +28,14 @@
 	$resp = recaptcha_check_answer ($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
     if ($resp->is_valid) {
 		
-		$q = mysqli_query("SELECT * FROM `members` WHERE(email='{$email}')") or die(mysqli_error());
+		$q = mysqli_query($link, "SELECT * FROM `members` WHERE(email='{$email}')") or die(mysqli_error($link));
 		$n = mysqli_num_rows($q);
 		
 		if($n) {
 		$f = mysqli_fetch_array($q);	$uid = $f['id']; $verified = $f['verified']; $key = $f['key'];
 		if($verified == 0) {
 				if($key == "") { $r = rand(); $t = time(); $key = md5($r."-".$t);
-				$q = mysqli_query("UPDATE `members` SET `key` = '{$key}' WHERE `id`={$uid} LIMIT 1") or die(mysqli_error());
+				$q = mysqli_query($link, "UPDATE `members` SET `key` = '{$key}' WHERE `id`={$uid} LIMIT 1") or die(mysqli_error($link));
 				newuser_email($email, $key);
 				$err = "<div class='infobox'><p>{$lang[83]}</p></div>"; am_showResend();
 				}

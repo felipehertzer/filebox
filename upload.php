@@ -66,7 +66,7 @@
 		$location = $pfolder."/".$fileLocation;
 		$small_location = $sfolder."/".$fileLocation;
 		$size = ceil($handle->file_src_size / 1024);
-		$sql = mysqli_query("INSERT INTO `files`(`name`, `location`, `small_location`, `extension`, `size`, `ip`, `date`, `userid`, `multicode`) VALUES('{$name_file}', '{$location}', '{$small_location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$uid}', {$multicode})") or die(mysqli_error());
+		$sql = mysqli_query($link, "INSERT INTO `files`(`name`, `location`, `small_location`, `extension`, `size`, `ip`, `date`, `userid`, `multicode`) VALUES('{$name_file}', '{$location}', '{$small_location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$uid}', {$multicode})") or die(mysqli_error($link));
 	 }	
 	 } else { // PROCESS REST OF THE FILES OVER HERE.
 	 $fileName = $Time.'_'.$rand_1.'_'.$rand_2.'_'.$rand_3.'_'.$handle->file_src_name_body;
@@ -78,7 +78,7 @@
 		$location = $ffolder.'/'.$fileLocation;
 		$size = ceil($handle->file_src_size / 1024);
 		$name_file = $handle->file_src_name;
-		$sql = mysqli_query("INSERT INTO `files`(`name`, `location`, `extension`, `size`, `ip`, `date`, `userid`, `multicode`) VALUES('{$name_file}', '{$location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$uid}', {$multicode})") or die(mysqli_error());
+		$sql = mysqli_query($link, "INSERT INTO `files`(`name`, `location`, `extension`, `size`, `ip`, `date`, `userid`, `multicode`) VALUES('{$name_file}', '{$location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$uid}', {$multicode})") or die(mysqli_error($link));
 	 }
 	 }
 	 }

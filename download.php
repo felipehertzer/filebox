@@ -18,7 +18,7 @@
  include("init.php");
  include("modules/charts/FusionCharts.php");
  if(isset($_GET['id'])) { $id = htmlspecialchars(trim($_GET['id'])); 
- $q = mysqli_query("SELECT `name`, `location`, `extension` FROM `files` WHERE(`id`={$id})") or die(mysqli_error());
+ $q = mysqli_query($link, "SELECT `name`, `location`, `extension` FROM `files` WHERE(`id`={$id})") or die(mysqli_error($link));
  if(mysqli_num_rows($q)) { $f = mysqli_fetch_array($q); $title = $f['name']; $tmp_extension = $f['extension']; $tmp_location = $f['location']; } else { $title = "File not found"; $tmp_extension = ""; }
  } else { $title = "Invalid page request"; }
  
@@ -109,7 +109,7 @@
  
 <?php echo "<div class='global'>";
  if(isset($_GET['id'])) { $id = htmlspecialchars(trim($_GET['id']));
- $d_query = mysqli_query("SELECT * FROM `files` WHERE(`id`={$id})") or die(mysqli_error());
+ $d_query = mysqli_query($link, "SELECT * FROM `files` WHERE(`id`={$id})") or die(mysqli_error($link));
  if(mysqli_num_rows($d_query)) { $f_query = mysqli_fetch_array($d_query); 
  if($f_query['is_folder'] != 1) { ?> 
  
@@ -156,7 +156,7 @@
  <li id='stats'><a href='#' id='fileStats' href='<?php echo $website; ?>/filestatistics.php?id=<?php echo $id; ?>'>Statistics</a></li>
  </div>
  
- <?php $views = $f_query['views'] + 1; $views_update = mysqli_query("UPDATE `files` SET `views`={$views} WHERE `id`={$id}") or die(mysqli_error()); ?>
+ <?php $views = $f_query['views'] + 1; $views_update = mysqli_query($link, "UPDATE `files` SET `views`={$views} WHERE `id`={$id}") or die(mysqli_error($link)); ?>
  
  <div id='filedetails'>
  <div id='filedetailsheader'><p>File Information</p></div>

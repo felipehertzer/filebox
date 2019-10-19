@@ -19,57 +19,9 @@ class dbSession
 {
     protected $link;
 
-    public function __construct($link)
+    public function __construct($link, $gc_maxlifetime = "", $gc_probability = "", $gc_divisor = "", $securityCode = "eF@0#u^*sZD9!S$%", $tableName = "sessions")
     {
         $this->link = $link;
-    }
-
-    /**
-     *  Constructor of class
-     *
-     *  Initializes the class and starts a new session
-     *
-     *  There is no need to call start_session() after instantiating this class
-     *
-     *  @param  integer     $gc_maxlifetime     (optional) the number of seconds after which data will be seen as 'garbage' and
-     *                                          cleaned up on the next run of the gc (garbage collection) routine
-     *
-     *                                          Default is specified in php.ini file
-     *
-     *  @param  integer     $gc_probability     (optional) used in conjunction with gc_divisor, is used to manage probability that
-     *                                          the gc routine is started. the probability is expressed by the formula
-     *
-     *                                          probability = $gc_probability / $gc_divisor
-     *
-     *                                          So if $gc_probability is 1 and $gc_divisor is 100 means that there is
-     *                                          a 1% chance the the gc routine will be called on each request
-     *
-     *                                          Default is specified in php.ini file
-     *
-     *  @param  integer     $gc_divisor         (optional) used in conjunction with gc_probability, is used to manage probability
-     *                                          that the gc routine is started. the probability is expressed by the formula
-     *
-     *                                          probability = $gc_probability / $gc_divisor
-     *
-     *                                          So if $gc_probability is 1 and $gc_divisor is 100 means that there is
-     *                                          a 1% chance the the gc routine will be called on each request
-     *
-     *                                          Default is specified in php.ini file
-     *
-     *  @param  string      $securityCode       (optional) the value of this argument is appended to the HTTP_USER_AGENT before
-     *                                          creating the md5 hash out of it. this way we'll try to prevent HTTP_USER_AGENT
-     *                                          spoofing
-     *
-     *                                          Default is 'sEcUr1tY_c0dE'
-     *
-     *  @param  string      $tableName          (optional) You can change the name of that table by setting this property
-     *
-     *                                          Default is 'session_data'
-     *
-     *  @return void
-     */
-    function dbSession($gc_maxlifetime = "", $gc_probability = "", $gc_divisor = "", $securityCode = "eF@0#u^*sZD9!S$%", $tableName = "sessions")
-    {
 
         // if $gc_maxlifetime is specified and is an integer number
         if ($gc_maxlifetime != "" && is_integer($gc_maxlifetime)) {
@@ -116,8 +68,52 @@ class dbSession
 
         // start the session
         session_start();
-
     }
+
+    /**
+     *  Constructor of class
+     *
+     *  Initializes the class and starts a new session
+     *
+     *  There is no need to call start_session() after instantiating this class
+     *
+     *  @param  integer     $gc_maxlifetime     (optional) the number of seconds after which data will be seen as 'garbage' and
+     *                                          cleaned up on the next run of the gc (garbage collection) routine
+     *
+     *                                          Default is specified in php.ini file
+     *
+     *  @param  integer     $gc_probability     (optional) used in conjunction with gc_divisor, is used to manage probability that
+     *                                          the gc routine is started. the probability is expressed by the formula
+     *
+     *                                          probability = $gc_probability / $gc_divisor
+     *
+     *                                          So if $gc_probability is 1 and $gc_divisor is 100 means that there is
+     *                                          a 1% chance the the gc routine will be called on each request
+     *
+     *                                          Default is specified in php.ini file
+     *
+     *  @param  integer     $gc_divisor         (optional) used in conjunction with gc_probability, is used to manage probability
+     *                                          that the gc routine is started. the probability is expressed by the formula
+     *
+     *                                          probability = $gc_probability / $gc_divisor
+     *
+     *                                          So if $gc_probability is 1 and $gc_divisor is 100 means that there is
+     *                                          a 1% chance the the gc routine will be called on each request
+     *
+     *                                          Default is specified in php.ini file
+     *
+     *  @param  string      $securityCode       (optional) the value of this argument is appended to the HTTP_USER_AGENT before
+     *                                          creating the md5 hash out of it. this way we'll try to prevent HTTP_USER_AGENT
+     *                                          spoofing
+     *
+     *                                          Default is 'sEcUr1tY_c0dE'
+     *
+     *  @param  string      $tableName          (optional) You can change the name of that table by setting this property
+     *
+     *                                          Default is 'session_data'
+     *
+     *  @return void
+     */
 
     /**
      *  Deletes all data related to the session
@@ -173,7 +169,7 @@ class dbSession
         $this->gc($this->sessionLifetime);
 
         // counts the rows from the database
-        $result = mysqli_result($this->link, mysqli_query($this->link, "
+        $result = mysqli_fetch_assoc(mysqli_query($this->link, "
             SELECT
                 COUNT(session_id) as count
             FROM " . $this->tableName . "
@@ -261,7 +257,7 @@ class dbSession
         // first it tries to insert a new row in the database BUT if session_id is already in the database then just
         // update session_data and session_expire for that specific session_id
         // read more here http://dev.mysql.com/doc/refman/4.1/en/insert-on-duplicate.html
-        $result = mysqli_query("
+        $result = mysqli_query($this->link, "
 
             INSERT INTO
                 " . $this->tableName . " (
@@ -319,7 +315,7 @@ class dbSession
     {
 
         // deletes the current session id from the database
-        $result = mysqli_query("
+        $result = mysqli_query($this->link, "
 
             DELETE FROM
                 " . $this->tableName . "

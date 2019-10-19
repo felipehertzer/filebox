@@ -58,7 +58,7 @@ include("init.php"); ?>
 }
 
 function emailForm() { global $website; global $id; global $err;
-		$q = mysqli_query("SELECT * FROM `files` WHERE(`id`={$id})") or die(mysqli_error());
+		$q = mysqli_query($link, "SELECT * FROM `files` WHERE(`id`={$id})") or die(mysqli_error($link));
 		if(mysqli_num_rows($q)) { $f = mysqli_fetch_array($q);
 		$is_folder = $f['is_folder']; 
 		if($is_folder == 1) { $src = "{$website}/images/labels/folder.png"; $type = "Folder"; }

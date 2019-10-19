@@ -29,7 +29,7 @@ if($sesslife == true) { ?>
 	  $desc = htmlspecialchars(trim($_POST['description']));
 	  $filename = htmlspecialchars(trim($_POST['filename']));
 	  if(!empty($filename)) {
-		$q = mysqli_query("UPDATE `files` SET `description`='{$desc}', `name`='{$filename}' WHERE(`id`={$id}) AND (`userid`={$userid})") or die(mysqli_error());
+		$q = mysqli_query($link, "UPDATE `files` SET `description`='{$desc}', `name`='{$filename}' WHERE(`id`={$id}) AND (`userid`={$userid})") or die(mysqli_error($link));
 		$err = "<div class='infobox'><p>File info has been saved.</p></div>"; editInfo_Form();
 	  } else { $err = "<div class='errorbox'><p>You must give file a valid name.</p></div>"; editInfo_Form(); }	
 	  } else { editInfo_Form(); }
@@ -42,8 +42,8 @@ if($sesslife == true) { ?>
 
 <?php }
 
-function editInfo_Form() { global $website; global $id; global $err; global $userid;
-		$q = mysqli_query("SELECT `name`, `description` FROM `files` WHERE(`id`={$id}) AND (`userid`={$userid})") or die(mysqli_error());
+function editInfo_Form() { global $website; global $id; global $err; global $userid; global $link;
+        $q = mysqli_query($link, "SELECT `name`, `description` FROM `files` WHERE(`id`={$id}) AND (`userid`={$userid})") or die(mysqli_error($link));
 		if(mysqli_num_rows($q)) { $f = mysqli_fetch_array($q); $filename = $f['name']; $description = $f['description'];
 ?>
 		<div class='emaildiv' id='email' style='text-align:left;'>

@@ -25,7 +25,7 @@
 	   echo "<div id='main'><div id='account-header'><p>Upload Details</p></div>";
 	   $multicode = htmlspecialchars(trim($_POST['multicode']));
 	   $date = date("d M Y"); $ip = $_SERVER['REMOTE_ADDR'];
-	   $query_im = mysqli_query("SELECT * FROM `files` WHERE(`multicode`={$multicode})") or die(mysqli_error());
+	   $query_im = mysqli_query($link, "SELECT * FROM `files` WHERE(`multicode`={$multicode})") or die(mysqli_error($link));
 	   $counter = mysqli_num_rows($query_im);
 			if(isset($_GET['fid'])) { $foldername = htmlspecialchars(trim($_POST['foldername']));
 			if($counter) {
@@ -121,7 +121,7 @@
 		$location = $pfolder."/".$fileLocation;
 		$small_location = $sfolder."/".$fileLocation;
 		$size = ceil($handle->file_src_size / 1024);
-		$sql = mysqli_query("INSERT INTO `files`(`name`, `location`, `small_location`, `extension`, `size`, `ip`, `date`, `userid`) VALUES('{$name_file}', '{$location}', '{$small_location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$userid}')") or die(mysqli_error());
+		$sql = mysqli_query($link, "INSERT INTO `files`(`name`, `location`, `small_location`, `extension`, `size`, `ip`, `date`, `userid`) VALUES('{$name_file}', '{$location}', '{$small_location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$userid}')") or die(mysqli_error($link));
 		$sql_id = mysqli_insert_id();
 		echo "<table class='showlinks'><tr><td id='image'><img src='{$website}/{$small_location}' /></td>";
 		echo "<td><p class='highlight'><b><a href='{$website}/download.php?id={$sql_id}'>{$name_file}</a></b> has been uploaded</p>";
@@ -140,7 +140,7 @@
 		$location = $ffolder.'/'.$fileLocation;
 		$size = ceil($handle->file_src_size / 1024);
 		$name_file = $handle->file_src_name;
-		$sql = mysqli_query("INSERT INTO `files`(`name`, `location`, `extension`, `size`, `ip`, `date`, `userid`) VALUES('{$name_file}', '{$location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$userid}')") or die(mysqli_error());
+		$sql = mysqli_query($link, "INSERT INTO `files`(`name`, `location`, `extension`, `size`, `ip`, `date`, `userid`) VALUES('{$name_file}', '{$location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$userid}')") or die(mysqli_error($link));
 		$sql_id = mysqli_insert_id();
 		echo "<table class='showlinks'><tr><td id='image'><img src='{$website}/showicon.php?id={$extension}' /></td>";
 		echo "<td><p class='highlight'><b><a href='{$website}/download.php?id={$sql_id}'>{$name_file}</a></b> has been uploaded</p>";

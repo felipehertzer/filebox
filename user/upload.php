@@ -15,7 +15,7 @@
 	+--------------------------------------------------------------------------
 	*/
  
- include("../init.php"); $upload_q = mysqli_query("SELECT `id` FROM `uploads` ORDER BY `id` DESC LIMIT 1") or die(mysqli_error());
+ include("../init.php"); $upload_q = mysqli_query($link, "SELECT `id` FROM `uploads` ORDER BY `id` DESC LIMIT 1") or die(mysqli_error($link));
  	 
 	 // Maximum file size in megabytes for the uploaded files.
 	 if($sesslife == true) {
@@ -33,8 +33,8 @@
   $date = date("d M Y");$ip = $_SERVER['REMOTE_ADDR'];
   if(mysqli_num_rows($upload_q)) { $upload_f = mysqli_fetch_array($upload_q);
   $multicode = $upload_f['id'] + 1;
-  $update_mc = mysqli_query("INSERT INTO `uploads`(`date`,`ip_address`,`userid`) VALUES('{$date}', '{$ip}', '{$userid}')") or die(mysqli_error());
-  } else { $multicode = 1; $update_mc = mysqli_query("INSERT INTO `uploads`(`date`,`ip_address`,`userid`) VALUES('{$date}', '{$ip}', '{$userid}')") or die(mysqli_error()); }
+  $update_mc = mysqli_query($link, "INSERT INTO `uploads`(`date`,`ip_address`,`userid`) VALUES('{$date}', '{$ip}', '{$userid}')") or die(mysqli_error($link));
+  } else { $multicode = 1; $update_mc = mysqli_query($link, "INSERT INTO `uploads`(`date`,`ip_address`,`userid`) VALUES('{$date}', '{$ip}', '{$userid}')") or die(mysqli_error($link)); }
  $css = "<link type='text/css' rel='stylesheet' href='{$website}/css/plupload.queue.css' />";
  $js = "<script type=\"text/javascript\" src=\"{$website}/js/plupload.full.min.js\"></script>
  <script type=\"text/javascript\" src=\"{$website}/js/jquery.plupload.queue.min.js\"></script>

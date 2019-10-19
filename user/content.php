@@ -34,7 +34,7 @@
 		
 	if($v == 'create') {
 		echo "<div class='onlyborder'>";
-		$sql_fq = mysqli_query("SELECT * FROM `files` WHERE(`userid`={$userid}) AND (`is_folder`=1)") or die(mysqli_error());
+		$sql_fq = mysqli_query($link, "SELECT * FROM `files` WHERE(`userid`={$userid}) AND (`is_folder`=1)") or die(mysqli_error($link));
 		echo "<center><table><tr><td id='first'>Create New Folder: </td><td><input type='text' id='foldername' name='foldername' /></td><td><b>under</b></td>";
 		
 		if(mysqli_num_rows($sql_fq)) { echo "<td><select id='folders' name='folders'>"; echo "<option value='0'>My Files</option>";
@@ -46,7 +46,7 @@
 		
 	if($v == 'move') {
 		echo "<div class='onlyborder'>";
-		$sql_fq = mysqli_query("SELECT * FROM `files` WHERE(`userid`={$userid}) AND (`is_folder`=1)") or die(mysqli_error());
+		$sql_fq = mysqli_query($link, "SELECT * FROM `files` WHERE(`userid`={$userid}) AND (`is_folder`=1)") or die(mysqli_error($link));
 		echo "<center><table><tr><td id='first'>Move selected files to folder: </td>";
 		if(mysqli_num_rows($sql_fq)) { echo "<td><select id='folders' name='folders'>"; echo "<option value='0'>My Files</option>";
 		while($sql_fetch = mysqli_fetch_array($sql_fq)) { echo "<option value='{$sql_fetch['id']}'>{$sql_fetch['name']}</option>";
@@ -90,7 +90,7 @@
 	
 	if($v == 'membership') {
 	echo "<div id='account-header'><p>Membership Details</p></div>";
-	$q = mysqli_query("SELECT * FROM `transactions` WHERE(`userid`={$userid}) ORDER BY `transaction_id` DESC") or die(mysqli_error());
+	$q = mysqli_query($link, "SELECT * FROM `transactions` WHERE(`userid`={$userid}) ORDER BY `transaction_id` DESC") or die(mysqli_error($link));
 	if(mysqli_num_rows($q)) {
 	echo "<div id='transaction-header'><table class='transactions' style='margin:0;'><tr><td>Transaction ID</td><td>Amount</td><td>Started</td><td>Expiry Date</td><td>Status</td><td></td></tr></table></div>";
 		while($row = mysqli_fetch_array($q)) {
@@ -104,7 +104,7 @@
 
 	if($v == 'points') {
 	echo "<div id='account-header'><p>Activity Points</p></div>";
-	$q = mysqli_query("SELECT * FROM `points` WHERE(`userid`={$userid}) ORDER BY `id` DESC") or die(mysqli_error());
+	$q = mysqli_query($link, "SELECT * FROM `points` WHERE(`userid`={$userid}) ORDER BY `id` DESC") or die(mysqli_error($link));
 	if(mysqli_num_rows($q)) {
 	echo "<div id='transaction-header'><table class='transactions' style='margin:0;'><tr><td>Points ID</td><td>Total Points</td><td>Period</td><td>File Downloads</td><td>Last Download</td></tr></table></div>";
 		while($row = mysqli_fetch_array($q)) {

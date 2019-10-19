@@ -28,7 +28,7 @@
 		if($currentpass == $userpass) {
 			if($newpass == $confirmpass) {
 				if(strlen($newpass) <= 25) {
-					$sql = mysqli_query("UPDATE `members` SET `password`='{$newpass}' WHERE(`id`={$userid})") or die(mysqli_error());
+					$sql = mysqli_query($link, "UPDATE `members` SET `password`='{$newpass}' WHERE(`id`={$userid})") or die(mysqli_error($link));
 					$_SESSION["pass"] = $newpass;
 					$err = "<div class='infobox'><p>Password changed<br/><small>Your password has been changed successfully and is effective immediately.</small></p></div>"; ft_changepass();
 				} else { $err = "<div class='errorbox'><p>Password too long<br/><small>Your password contains more than 25 characters. Please restrict your password to 25 or less characters.</small></p></div>"; ft_changepass(); }			

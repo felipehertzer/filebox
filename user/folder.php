@@ -23,7 +23,7 @@
 			$parent = htmlspecialchars(trim($_POST['folders'])); $created_on = date("d M Y");
 			$ip = $_SERVER['REMOTE_ADDR'];
 				if($folder != "") {
-			$sql_create = mysqli_query("INSERT INTO `files`(`name`, `ip`, `userid`, `date`, `parent`, `is_folder`) VALUES('{$folder}', '{$ip}', {$userid}, '{$created_on}', {$parent}, 1)") or die(mysqli_error());
+			$sql_create = mysqli_query($link, "INSERT INTO `files`(`name`, `ip`, `userid`, `date`, `parent`, `is_folder`) VALUES('{$folder}', '{$ip}', {$userid}, '{$created_on}', {$parent}, 1)") or die(mysqli_error($link));
 			$err = "<div class='infobox'><p>Folder Created<br/><small>Your new folder has been created and is now available under the parent folder you chose for.</small></p></div>";
 				} else { $err = "<div class='errorbox'><p>Folder name cannot be blank<br/><small>You must enter a name to create a folder.</small></p></div>"; }
  }
@@ -59,7 +59,7 @@
  if(isset($_POST["files"])) {
 		$files = $_POST["files"];
         while(list($index, $id) = each($files)) {
-           $q = mysqli_query("UPDATE `files` SET `filter`=0 WHERE(`id`={$id}) AND (`userid`={$userid}) AND (`is_folder`!=1)") or die(mysqli_error());
+           $q = mysqli_query($link, "UPDATE `files` SET `filter`=0 WHERE(`id`={$id}) AND (`userid`={$userid}) AND (`is_folder`!=1)") or die(mysqli_error($link));
         }   
         $err = "<div class='infobox'><p>Selected files have been marked public.<br/><small>The files which you selected has been marked as public.</small></p></div>";
     }
@@ -72,7 +72,7 @@
  if(isset($_POST["files"])) {
 		$files = $_POST["files"];
         while(list($index, $id) = each($files)) {
-           $q = mysqli_query("UPDATE `files` SET `filter`=1 WHERE(`id`={$id}) AND (`userid`={$userid}) AND (`is_folder`!=1)") or die(mysqli_error());
+           $q = mysqli_query($link, "UPDATE `files` SET `filter`=1 WHERE(`id`={$id}) AND (`userid`={$userid}) AND (`is_folder`!=1)") or die(mysqli_error($link));
         }   
         $err = "<div class='infobox'><p>Selected files have been secured.<br/><small>The files which you selected has been marked as private.</small></p></div>";
     }
@@ -92,19 +92,19 @@
  if(isset($_POST["files"])) {
 		$files = $_POST["files"];      
         while(list($index, $id) = each($files)) {
-           $q = mysqli_query("SELECT * FROM `files` WHERE(`id`={$id})") or die(mysqli_error());
+           $q = mysqli_query($link, "SELECT * FROM `files` WHERE(`id`={$id})") or die(mysqli_error($link));
 		   if(mysqli_num_rows($q)) { $f = mysqli_fetch_array($q);
 		   $location = "../".$f['location']; $is_folder = $f['is_folder']; $fileSize = $f['size']; 
 		   $owner = $f['userid']; $dl = $f['downloads'] + 1;
 		  
 		  if($is_folder != 1) {
 		   //Added for download information
-		   $dl_record = mysqli_query("INSERT INTO `downloads`(`ip_address`, `file_id`, `file_size`, `date`, `owner_id`, `dl_user`) VALUES('{$ip}', {$id}, {$fileSize}, '{$date_bd}', {$owner}, {$userid})") or die(mysqli_error());
-		   $dl_update = mysqli_query("UPDATE `files` SET `downloads`={$dl} WHERE(`id`={$id})") or die(mysqli_error());
+		   $dl_record = mysqli_query($link, "INSERT INTO `downloads`(`ip_address`, `file_id`, `file_size`, `date`, `owner_id`, `dl_user`) VALUES('{$ip}', {$id}, {$fileSize}, '{$date_bd}', {$owner}, {$userid})") or die(mysqli_error($link));
+		   $dl_update = mysqli_query($link, "UPDATE `files` SET `downloads`={$dl} WHERE(`id`={$id})") or die(mysqli_error($link));
 		   if($owner != 0) { 
-		   $bw_get = mysqli_query("SELECT `bandwidth_used` FROM `members` WHERE(`id`={$owner})") or die(mysqli_error());
+		   $bw_get = mysqli_query($link, "SELECT `bandwidth_used` FROM `members` WHERE(`id`={$owner})") or die(mysqli_error($link));
 		   if(mysqli_num_rows($bw_get)) { $bw_fetch = mysqli_fetch_array($bw_get); $bw_used = $bw_fetch['bandwidth_used'] + $fileSize;
-		   $bw_update = mysqli_query("UPDATE `members` SET `bandwidth_used`={$bw_used} WHERE(`id`={$owner})") or die(mysqli_error());
+		   $bw_update = mysqli_query($link, "UPDATE `members` SET `bandwidth_used`={$bw_used} WHERE(`id`={$owner})") or die(mysqli_error($link));
 		   }
 		   
 		   	 /* Getting the country of the user using the IP address and making use of that for the
@@ -113,15 +113,15 @@
 			 tier_points();
 			 
 			 $temp_month = date("M"); $last_action = date("d M Y H:i"); $temp_year = date("Y");
-			 $point_query = mysqli_query("SELECT * FROM `points` WHERE(`userid`={$owner}) AND (`month`='{$temp_month}') AND (`year`='{$temp_year}')") or die(mysqli_error());
+			 $point_query = mysqli_query($link, "SELECT * FROM `points` WHERE(`userid`={$owner}) AND (`month`='{$temp_month}') AND (`year`='{$temp_year}')") or die(mysqli_error($link));
 			 
 				if(mysqli_num_rows($point_query)) {
 					$point_fetch = mysqli_fetch_array($point_query);
 					$owner_points = $point_fetch['points'] + $points;
-					$point_update = mysqli_query("UPDATE `points` SET `points`={$owner_points}, `last_action`='{$last_action}' WHERE(`userid`={$owner}) AND (`month`='{$temp_month}') AND (`year`='{$temp_year}')") or die(mysqli_error());
+					$point_update = mysqli_query($link, "UPDATE `points` SET `points`={$owner_points}, `last_action`='{$last_action}' WHERE(`userid`={$owner}) AND (`month`='{$temp_month}') AND (`year`='{$temp_year}')") or die(mysqli_error($link));
 				}
 				else {
-					$point_insert = mysqli_query("INSERT INTO `points`(`userid`, `month`, `year`, `points`, `last_action`) VALUES({$owner}, '{$temp_month}', '{$temp_year}', {$points}, '{$last_action}')") or die(mysqli_error());
+					$point_insert = mysqli_query($link, "INSERT INTO `points`(`userid`, `month`, `year`, `points`, `last_action`) VALUES({$owner}, '{$temp_month}', '{$temp_year}', {$points}, '{$last_action}')") or die(mysqli_error($link));
 				}		   
 		   } /* Download information ends over here */
 		   
@@ -204,12 +204,12 @@
 	if(isset($_GET['id'])) { $id = htmlspecialchars(trim($_GET['id']));
 	$currentUrl = current_url();
  
-	$check_query = mysqli_query("SELECT * FROM `files` WHERE(`id`={$id}) AND (`is_folder`=1)") or die(mysqli_error());
+	$check_query = mysqli_query($link, "SELECT * FROM `files` WHERE(`id`={$id}) AND (`is_folder`=1)") or die(mysqli_error($link));
 	if(mysqli_num_rows($check_query)) { $fetch_query = mysqli_fetch_array($check_query);
 	
 	echo "<div class='infobox' style='margin-bottom:5px;'><p><b>Folder Name: </b><span id='more'>{$fetch_query['name']}</span></p></div>";
 	
-	$sql = mysqli_query("SELECT * FROM `files` WHERE(`parent`={$id}) {$_SESSION['order']} DESC") or die(mysqli_error());
+	$sql = mysqli_query($link, "SELECT * FROM `files` WHERE(`parent`={$id}) {$_SESSION['order']} DESC") or die(mysqli_error($link));
 	$sql_n = mysqli_num_rows($sql);
  	
 	if($sql_n != 0) { 
@@ -259,11 +259,11 @@
 	else { $already = "Private"; $make = "Public"; $class_red = "red"; $change_filter = 0; }
 	
 	if($is_f == 1) {
-	$fc_query = mysqli_query("SELECT count(*) AS count FROM `files` WHERE(`is_folder`=1) AND (`parent`={$fid})");
-	$folder_count = mysqli_result($fc_query, 0);
+	$fc_query = mysqli_query($link, "SELECT count(*) as count AS count FROM `files` WHERE(`is_folder`=1) AND (`parent`={$fid})");
+	$folder_count = mysqli_fetch_assoc($fc_query)['count'];
 	
-	$filec_query = mysqli_query("SELECT count(*) AS count FROM `files` WHERE(`is_folder`!=1) AND (`parent`={$fid})");
-	$file_count = mysqli_result($filec_query, 0);
+	$filec_query = mysqli_query($link, "SELECT count(*) as count AS count FROM `files` WHERE(`is_folder`!=1) AND (`parent`={$fid})");
+	$file_count = mysqli_fetch_assoc($filec_query)['count'];
 	
 	echo "<tr onmouseover=\"showItems('{$fid}');\" onmouseout=\"hideItems('{$fid}');\" id='tr{$fid}'><td class='checkbox'><input type='checkbox' name='files[]' value='{$fid}' onclick='highlight(this);' /></td>";
 	echo "<td class='image'><img src='{$website}/images/labels/folder.png' /></td>";

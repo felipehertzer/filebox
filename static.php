@@ -21,7 +21,7 @@
  <p id='forall'>The information or page you are looking for either does not exist or has been moved to another location. Please make sure you followed the right link. <br/><br/>If you are sure that you followed the right link, then please tell our staff about this error by reporting it <a href='{$website}/static/contact.php'>over here</a>.</p></div></center>";
  
  if(isset($_GET['page_id'])) { $page_id = htmlspecialchars(trim($_GET['page_id']));
- $sql = mysqli_query("SELECT * FROM `pages` WHERE(`page_id`='{$page_id}')") or die(mysqli_error());
+ $sql = mysqli_query($link, "SELECT * FROM `pages` WHERE(`page_id`='{$page_id}')") or die(mysqli_error($link));
  if(mysqli_num_rows($sql)) { $sql_f = mysqli_fetch_array($sql); $page_header = $sql_f['page_header']; $body = $sql_f['body']; }
  else { $page_header = "Error"; } }
  subheader($page_header, $css, $js, '');
