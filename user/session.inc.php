@@ -59,8 +59,7 @@ if ($cookie) {
         $premium = $fb_fetch['premium'];
         $username = $fb_fetch['email'];
         $fb_update = mysqli_query($link, "UPDATE `members` SET `access`='{$access_date}', `fb_id`={$temp_fb_id} WHERE(`id`={$userid})") or die(mysqli_error($link));
-    }
-    else {
+    } else {
         /* Creating a random key for the user */
         $temp_r = rand();
         $temp_r_2 = rand();
@@ -73,8 +72,7 @@ if ($cookie) {
         $fb_insert = mysqli_query($link, "INSERT INTO `members`(`name`, `password`, `email`, `key`, `join`, `access`, `fb_id`) VALUES('{$username}', '{$temp_password}', '{$fb_email}', '{$temp_key}', '{$access_date}', '{$access_date}', {$temp_fb_id})") or die(mysqli_error($link));
 
     }
-}
-elseif (isset($_SESSION["user"])) {
+} elseif (isset($_SESSION["user"])) {
     $sesslife = true;
 
     /* Validation in the database using the following two credentials */
@@ -91,8 +89,7 @@ elseif (isset($_SESSION["user"])) {
         $session->stop();
         $sesslife = false;
         $userid = 0;
-    }
-    else {
+    } else {
         $r = mysqli_fetch_array($result_set);
 
         /* The following information is fetched from the database for the current user */
@@ -102,8 +99,7 @@ elseif (isset($_SESSION["user"])) {
         $premium = $r['premium'];
         $full_name = $r['name'];
     }
-}
-else {
+} else {
     /* The user is not logged in. Show the visitor page to him. */
     $sesslife = false;
     $userid = 0;

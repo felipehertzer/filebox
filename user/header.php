@@ -42,8 +42,7 @@ function subheader($title, $css = "", $js = "", $cl = "")
                     // Function for sending mail to the user will come over here.
                     $premium = 0;
                 }
-            }
-            else {
+            } else {
                 $premium = 0;
             }
         }
@@ -51,7 +50,7 @@ function subheader($title, $css = "", $js = "", $cl = "")
     ?>
 
     <!DOCTYPE html>
-    <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+    <html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
     <head>
         <title><?php echo $webtitle; ?> - <?php echo $title; ?></title>
         <META NAME="Description" CONTENT="<?php echo $description; ?>">
@@ -106,8 +105,7 @@ function subheader($title, $css = "", $js = "", $cl = "")
                         <li<?php if ($cl == 'home') {
                             echo " class=\"selected\"";
                         } ?>><a href="<?php echo $website; ?>/">Home</a></li>
-                    <?php }
-                    else { ?>
+                    <?php } else { ?>
                         <li<?php if ($cl == 'home') {
                             echo " class=\"selected\"";
                         } ?>><a href="<?php echo $website; ?>/">Dashboard</a></li>
@@ -122,8 +120,7 @@ function subheader($title, $css = "", $js = "", $cl = "")
                         <li<?php if ($cl == 'upload') {
                             echo " class=\"selected\"";
                         } ?>><a href="<?php echo $website; ?>/user/upload.php">Upload</a></li>
-                    <?php }
-                    else { ?>
+                    <?php } else { ?>
                         <li<?php if ($cl == 'tour') {
                             echo " class=\"selected\"";
                         } ?>><a href="<?php echo $website; ?>/static/tour.php">Tour</a></li>
@@ -142,8 +139,7 @@ function subheader($title, $css = "", $js = "", $cl = "")
                         <li<?php if ($cl == 'register') {
                             echo " class=\"selected\"";
                         } ?>><a href="<?php echo $website; ?>/user/register.php">Register</a></li>
-                    <?php }
-                    else { ?>
+                    <?php } else { ?>
                         <li>Welcome <b><?php echo $username; ?></b>,
 
                             <?php

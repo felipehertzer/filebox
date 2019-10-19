@@ -16,8 +16,8 @@
 */
 
 
-define('FACEBOOK_APP_ID', 'f8c226475ed8a00773a0f44083ed9443');
-define('FACEBOOK_SECRET', '041c56f7a4a259bd08b8fa09c984a06f');
+define('FACEBOOK_APP_ID', '1957805037655793');
+define('FACEBOOK_SECRET', 'b0d5f0d593dca314751e0af91179871d');
 
 function get_facebook_cookie($app_id, $application_secret)
 {
@@ -78,8 +78,6 @@ function imagecreatefromunknown($path, $ext)
 {
     switch ($ext) {
         case "jpg":
-            $img = imagecreatefromjpeg($path);
-            break;
         case "jpeg":
             $img = imagecreatefromjpeg($path);
             break;

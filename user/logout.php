@@ -21,8 +21,7 @@ if ($sesslife == true) {
     if (!$cookie) {
         $session->stop();
     }
-}
-else {
+} else {
     echo "<meta http-equiv='Refresh' Content='0;URL={$website}/' />";
 }
 

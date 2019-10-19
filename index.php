@@ -25,14 +25,11 @@ if ($sesslife == true) {
     disk_usage($userid);
     if ($percent <= 40) {
         $bar_Image = "{$website}/images/bar/progressbg_green.gif";
-    }
-    elseif ($percent > 40 && $percent <= 80) {
+    } elseif ($percent > 40 && $percent <= 80) {
         $bar_Image = "{$website}/images/bar/progressbg_yellow.gif";
-    }
-    elseif ($percent > 80 && $percent <= 100) {
+    } elseif ($percent > 80 && $percent <= 100) {
         $bar_Image = "{$website}/images/bar/progressbg_red.gif";
-    }
-    else {
+    } else {
         $bar_Image = "{$website}/images/bar/progressbg_red.gif";
     }
     $js .= "<script type=\"text/javascript\">
@@ -45,8 +42,7 @@ subheader('Home', '', $js, '');
 if ($sesslife == false) {
     if (isset($_GET['v'])) {
         $v = htmlspecialchars(trim($_GET['v']));
-    }
-    else {
+    } else {
         $v = "";
     }
 
@@ -160,12 +156,10 @@ if ($sesslife == false) {
             <a href='<?php echo $website; ?>/?v=multiupload'><p id='multi'>Multi Upload</p></a></div>
 
     <?php }
-}
-else {
+} else {
     if ($premium == 1) {
         $space_limit = $premium_space;
-    }
-    else {
+    } else {
         $space_limit = $normal_space;
     }
 

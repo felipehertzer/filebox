@@ -30,19 +30,18 @@ if ($r == 'verify') {
         $password = htmlspecialchars(trim($_POST["password"]));
 
         if (($username != "") && ($password != "")) {
-            $resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+            $resp = recaptcha_check_answer($privatekey, $_POST["g-recaptcha-response"]);
             if ($resp->is_valid) {
                 $q = "SELECT * FROM `members` WHERE (email = '{$username}') and (password = '{$password}')";
                 if (!($result_set = mysqli_query($link, $q))) {
                     die(mysqli_error($link));
                 }
                 $n2 = mysqli_num_rows($result_set);
- 
+
                 if (!$n2) {
                     $err = "<div class='errorbox'><p>{$lang[37]}</p></div>";
                     showcaptcha($username);
-                }
-                else {
+                } else {
                     $f = mysqli_fetch_array($result_set);
                     $verified = $f['verified'];
                     $banned = $f['banned'];
@@ -50,13 +49,11 @@ if ($r == 'verify') {
                     if ($verified == '0') {
                         $err = "<div class='errorbox'><p>{$lang[38]} <small><a href='{$website}/user/resend.php'>{$lang[72]}</a></small></p></div>";
                         showcaptcha($username);
-                    }
-                    else {
+                    } else {
                         if ($banned == 1) {
                             $err = "<div class='errorbox'><p>{$lang[48]}<br/><small>{$lang[57]}</small></p></div>";
                             showcaptcha($username);
-                        }
-                        else {
+                        } else {
                             $date = date("d M Y");
                             $q = mysqli_query($link, "UPDATE `members` SET access = '{$date}' WHERE email = '{$username}'");
                             $up = mysqli_query($link, "UPDATE `members` SET `login_attempt` = 0 WHERE `email`='{$username}' LIMIT 1") or die(mysqli_error($link));
@@ -68,19 +65,16 @@ if ($r == 'verify') {
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 $err = "<div class='errorbox'><p>{$lang[54]}</p></div>";
                 showcaptcha($username);
             }
-        }
-        else {
+        } else {
             $err = "<div class='errorbox'><p>{$lang[39]}</p></div>";
             showcaptcha($username);
         }
     }
-}
-elseif ($r == 'reg') {
+} elseif ($r == 'reg') {
     if (isset($_POST["login"])) {
         $username = htmlspecialchars(trim($_POST["username"]));
         $password = htmlspecialchars(trim($_POST["password"]));
@@ -94,8 +88,7 @@ elseif ($r == 'reg') {
                 if ($login_attempt > 4) {
                     $err = "<div class='errorbox'><p>{$lang[73]}</p></div>";
                     showcaptcha($username);
-                }
-                else {
+                } else {
                     $q = "SELECT * FROM `members` WHERE (email = '{$username}') and (password = '{$password}')";
                     if (!($result_set = mysqli_query($link, $q))) {
                         die(mysqli_error($link));
@@ -107,8 +100,7 @@ elseif ($r == 'reg') {
                         $up = mysqli_query($link, "UPDATE `members` SET `login_attempt` = '{$attempt}' WHERE `email`='{$username}' LIMIT 1") or die(mysqli_error($link));
                         $err = "<div class='errorbox'><p>{$lang[37]}</p></div>";
                         am_showLogin();
-                    }
-                    else {
+                    } else {
                         $f = mysqli_fetch_array($result_set);
                         $verified = $f['verified'];
                         $banned = $f['banned'];
@@ -116,13 +108,11 @@ elseif ($r == 'reg') {
                         if ($verified == '0') {
                             $err = "<div class='errorbox'><p>{$lang[38]} <small><a href='{$website}/user/resend.php'>{$lang[72]}</a></small></p></div>";
                             am_showLogin();
-                        }
-                        else {
+                        } else {
                             if ($banned == 1) {
                                 $err = "<div class='errorbox'><p>{$lang[48]}<br/><br/><small>{$lang[57]}</small></p></div>";
                                 am_showLogin();
-                            }
-                            else {
+                            } else {
                                 $date = date("d M Y");
                                 $q = mysqli_query($link, "UPDATE `members` SET access = '{$date}' WHERE email = '{$username}'");
                                 $up = mysqli_query($link, "UPDATE `members` SET `login_attempt` = 0 WHERE `email`='{$username}' LIMIT 1") or die(mysqli_error($link));
@@ -135,23 +125,19 @@ elseif ($r == 'reg') {
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 $err = "<div class='errorbox'><p>{$lang[37]}</p></div>";
                 am_showLogin();
             }
-        }
-        else {
+        } else {
             $err = "<div class='errorbox'><p>{$lang[39]}</p></div>";
             am_showLogin();
         }
     }
-}
-else {
+} else {
     if ($sesslife == false) {
         am_showLogin();
-    }
-    else {
+    } else {
         echo "<br/><center><div class='errorbox' style='width:960px;'><p>{$lang[40]}<br/><small>You cannot perform this action while you are logged in to the website.</small></p></div></center><br/><br/>";
     }
 }

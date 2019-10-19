@@ -28,7 +28,7 @@ if ($sesslife == false) {
         $name = trim(htmlspecialchars($_POST['name']));
 
         if (($email != "") && ($password != "") && ($name != "")) {
-            $resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+            $resp = recaptcha_check_answer($privatekey, $_POST["g-recaptcha-response"]);
             if ($resp->is_valid) {
                 if (isValidEmail($email)) {
                     $q = mysqli_query($link, "SELECT * FROM `members` WHERE(email = '{$email}')") or die(mysqli_error($link));
@@ -48,32 +48,26 @@ if ($sesslife == false) {
                             $err = "<div class='infobox'><p>{$lang[76]} {$webtitle}<br/><small>{$lang[77]}</small></p></div>";
                             am_showRegister();
                         }
-                    }
-                    else {
+                    } else {
                         $err = "<div class='errorbox'><p>{$lang[78]}<br/><small><a href='{$website}/user/resend.php'>{$lang[72]}</a></small></p></div>";
                         am_showRegister();
                     }
-                }
-                else {
+                } else {
                     $err = "<div class='errorbox'><p>{$lang[79]}</p></div>";
                     am_showRegister();
                 }
-            }
-            else {
+            } else {
                 $err = "<div class='errorbox'><p>{$lang[54]}</p></div>";
                 am_showRegister();
             }
-        }
-        else {
+        } else {
             $err = "<div class='errorbox'><p>{$lang[80]}</p></div>";
             am_showRegister();
         }
-    }
-    else {
+    } else {
         am_showRegister();
     }
-}
-else {
+} else {
     echo "<br/><center><div class='errorbox' style='width:960px;'><p>{$lang[40]}<br/><small>You cannot perform this action while you are logged in to the website.</small></p></div></center><br/><br/>";
 }
 

@@ -36,8 +36,13 @@ class pagination{
 
 		/*****/
 		var $calculate = false;
-		
-		#Total items
+
+		public function __construct()
+        {
+
+        }
+
+    #Total items
 		function items($value){$this->total_pages = (int) $value;}
 		
 		#how many items to show per page
@@ -77,7 +82,6 @@ class pagination{
 		
 		var $pagination;
 
-		function pagination(){}
 		function show(){
 				if(!$this->calculate)
 					if($this->calculate())
@@ -107,7 +111,7 @@ class pagination{
 						echo "Especificaste un wildcard para sustituir, pero no existe en el target<br />";
 						$error = true;
 					}elseif($this->urlF and $this->urlF == '%' and strpos($this->target,$this->urlF)===false){
-						echo "Es necesario especificar en el target el comodin % para sustituir el número de página<br />";
+						echo "Es necesario especificar en el target el comodin % para sustituir el nï¿½mero de pï¿½gina<br />";
 						$error = true;
 					}
 
