@@ -25,7 +25,7 @@ if ($sesslife == true) {
         $created_on = date("d M Y");
         $ip = $_SERVER['REMOTE_ADDR'];
         if ($folder != "") {
-            $sql_create = mysqli_query($link, "INSERT INTO `files`(`name`, `ip`, `userid`, `date`, `parent`, `is_folder`) VALUES('{$folder}', '{$ip}', {$userid}, '{$created_on}', {$parent}, 1)") or die(mysqli_error($link));
+            $sql_create = mysqli_query($link, "INSERT INTO `files`(`name`, `location`, `description`, `extension`, `size`, `ip`, `userid`, `date`, `parent`, `is_folder`) VALUES('{$folder}', '', '', '', '0','{$ip}', {$userid}, '{$created_on}', {$parent}, 1)") or die(mysqli_error($link));
             $err = "<div class='infobox'><p>Folder Created<br/><small>Your new folder has been created and is now available under the parent folder you chose for.</small></p></div>";
         } else {
             $err = "<div class='errorbox'><p>Folder name cannot be blank<br/><small>You must enter a name to create a folder.</small></p></div>";
@@ -36,7 +36,7 @@ if ($sesslife == true) {
         $folder = htmlspecialchars(trim($_POST['folders']));
         if (isset($_POST["files"])) {
             $files = $_POST["files"];
-            while (list($index, $id) = each($files)) {
+            foreach($files as $index => $id) {
                 movetofolder($id, $folder);
             }
             $err = "<div class='infobox'><p>Selected files moved to folder.<br/><small>The files have been moved to the selected folder. View the folder by <a href='{$website}/user/folder.php?id={$folder}'>clicking here</a>.</small></p></div>";
@@ -326,10 +326,10 @@ subheader('My Files', $css, $js, 'files'); ?>
             }
 
             if ($is_f == 1) {
-                $fc_query = mysqli_query($link, "SELECT count(*) as count AS count FROM `files` WHERE(`userid`={$userid}) AND (`is_folder`=1) AND (`parent`={$fid})");
+                $fc_query = mysqli_query($link, "SELECT count(*) as count FROM `files` WHERE(`userid`={$userid}) AND (`is_folder`=1) AND (`parent`={$fid})");
                 $folder_count = mysqli_fetch_assoc($fc_query)['count'];
 
-                $filec_query = mysqli_query($link, "SELECT count(*) as count AS count FROM `files` WHERE(`userid`={$userid}) AND (`is_folder`!=1) AND (`parent`={$fid})");
+                $filec_query = mysqli_query($link, "SELECT count(*) as count FROM `files` WHERE(`userid`={$userid}) AND (`is_folder`!=1) AND (`parent`={$fid})");
                 $file_count = mysqli_fetch_assoc($filec_query)['count'];
 
                 echo "<tr onmouseover=\"showItems('{$fid}');\" onmouseout=\"hideItems('{$fid}');\" id='tr{$fid}'><td class='checkbox'><input type='checkbox' name='files[]' value='{$fid}' onclick='highlight(this);' /></td>";

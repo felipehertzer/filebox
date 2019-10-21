@@ -20,7 +20,6 @@ $userid = 0;
 $premium = 0;
 /* This page checks and validates whether the current session user is logged in to
 the website or not */
-var_dump($_SESSION);
 function createRandomPassword()
 { /* For generating random passwords */
     $chars = "abcdefghijkmnopqrstuvwxyz023456789";

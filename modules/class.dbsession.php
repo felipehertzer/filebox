@@ -68,9 +68,6 @@ class dbSession
 
         // start the session
         session_start();
-        $_SESSION['user'] = 'felipeaugustohertzer@live.com';
-        $_SESSION['pass'] = '123456';
-        var_dump($_SESSION);
     }
 
     /**
@@ -152,7 +149,7 @@ class dbSession
         // regenerates the id
         // this function will create a new session, with a new id and containing the data from the old session
         // but will not delete the old session
-        session_regenerate_id();
+        session_regenerate_id(true);
 
         // because the session_regenerate_id() function does not delete the old session,
         // we have to delete it manually
@@ -214,7 +211,6 @@ class dbSession
      */
     function read($session_id)
     {
-
         // reads session data associated with the session id
         // but only
         // - if the HTTP_USER_AGENT is the same as the one who had previously written to this session AND
@@ -234,7 +230,7 @@ class dbSession
         ");
 
         // if anything was found
-        if (is_resource($result) && mysqli_num_rows($result) > 0) {
+        if ($result instanceof mysqli_result && mysqli_num_rows($result) > 0) {
 
             // return found data
             $fields = mysqli_fetch_assoc($result);
@@ -261,7 +257,6 @@ class dbSession
         // update session_data and session_expire for that specific session_id
         // read more here http://dev.mysql.com/doc/refman/4.1/en/insert-on-duplicate.html
         $result = mysqli_query($this->link, "
-
             INSERT INTO
                 " . $this->tableName . " (
                     session_id,
@@ -328,7 +323,7 @@ class dbSession
         ");
 
         // if anything happened
-        if (mysqli_affected_rows()) {
+        if (mysqli_affected_rows($this->link)) {
 
             // return true
             return true;
@@ -356,7 +351,7 @@ class dbSession
                 session_expire < '".mysqli_real_escape_string($this->link, time() - $maxlifetime)."'
 
         ");
-
+        return true;
     }
 
 }

@@ -27,6 +27,7 @@ function subheader($title, $css = "", $js = "", $cl = "")
     global $keywords;
     global $premium;
     global $userid;
+    global $link;
 
     /* Checking the user premium membership status and if found that the membership has
     expired then degrade the user as normal member and send him a membership expiry mail */
@@ -56,14 +57,11 @@ function subheader($title, $css = "", $js = "", $cl = "")
         <META NAME="Description" CONTENT="<?php echo $description; ?>">
         <META NAME="Keywords" CONTENT="<?php echo $keywords; ?>">
         <META NAME="Author" CONTENT="Akshit Sethi">
-        <link type="text/css" rel="stylesheet" href="<?php echo $website; ?>/css/bootstrap.min.css"/>
         <link type="text/css" rel="stylesheet" href="<?php echo $website; ?>/css/default.css"/>
-        <?php echo $css; // Additional CSS files for specific pages
-        ?>
+        <?php echo $css; // Additional CSS files for specific pages ?>
         <script type="text/javascript" src="<?php echo $website; ?>/js/core-base.js"></script>
         <script type="text/javascript" src="<?php echo $website; ?>/js/jquery.min.js"></script>
-        <?php echo $js; // Additional JS files for specific pages
-        ?>
+        <?php echo $js; // Additional JS files for specific pages ?>
     </head>
 <body>
     <div id="fb-root"></div>

@@ -37,21 +37,26 @@ subheader('Upload Details', '', '', 'upload'); ?>
                 while ($fetch_im = mysqli_fetch_array($query_im)) {
                     echo "<td><a href=\"{$website}/photo.php?id={$fetch_im['id']}\"><img src='{$website}/thumb.php?id={$fetch_im['id']}' /></a></td>";
                     $x++;
-                    if (($x % 3) == 0) echo "</tr><tr>";
+                    if (($x % 3) == 0) {
+                        echo "</tr><tr>";
+                    }
                 }
                 echo "</tr></table>";
-            } else {
+            }
+            else {
                 echo "<div class='errorbox'><p>No files uploaded to the folder.</p></div>";
             }
-        } else {
+        }
+        else {
             if ($counter) {
                 while ($fetch_im = mysqli_fetch_array($query_im)) {
-                    var_dump($fetch_im);
                     echo "<table class='showlinks'><tr><td id='image'>";
                     if (($fetch_im['extension'] == "gif") || ($fetch_im['extension'] == "jpg") || ($fetch_im['extension'] == "jpeg") ||
-                        ($fetch_im['extension'] == "png") || ($fetch_im['extension'] == "bmp") || ($fetch_im['extension'] == "pjpeg")) {
+                        ($fetch_im['extension'] == "png") || ($fetch_im['extension'] == "bmp") || ($fetch_im['extension'] == "pjpeg")
+                    ) {
                         echo "<img src='{$website}/small.php?id={$fetch_im['id']}' />";
-                    } else {
+                    }
+                    else {
                         echo "<img src='{$website}/showicon.php?id={$fetch_im['extension']}' />";
                     }
                     echo "</td><td><p class='highlight'><b><a href='{$website}/download.php?id={$fetch_im['id']}'>{$fetch_im['name']}</a></b> has been uploaded</p>";
@@ -59,12 +64,14 @@ subheader('Upload Details', '', '', 'upload'); ?>
                     echo "<tr><td><b>BB Code</b></td><td><input type='text' onclick=\"this.select();\" value=\"[URL={$website}/download.php?id={$fetch_im['id']}] [IMG]{$website}/images/labels/{$fetch_im['extension']}.png[/IMG][/URL]\"></td></tr></table>";
                     echo "</td></tr></table>";
                 }
-            } else {
+            }
+            else {
                 echo "<div class='errorbox'><p>You must upload atleast one file.</p></div>";
             }
         }
         echo "</div>";
-    } elseif (isset($_POST["formUpload"])) {
+    }
+    elseif (isset($_POST["formUpload"])) {
 
         echo "<div id='main'><div id='account-header'><p>Upload Details</p></div>";
 
@@ -83,10 +90,12 @@ subheader('Upload Details', '', '', 'upload'); ?>
         if ($sesslife == true) {
             if ($premium == 1) {
                 $maxFileSize = $premium_maxFile;
-            } else {
+            }
+            else {
                 $maxFileSize = $normal_maxFile;
             }
-        } else {
+        }
+        else {
             $maxFileSize = $anon_maxFile;
         }
 
@@ -126,7 +135,8 @@ subheader('Upload Details', '', '', 'upload'); ?>
 
                             // IF UPLOADED FILETYPE IS AN IMAGE, THEN UPLOAD THE FILE AND CREATE THUMBNAILS.
                             if (($extension == "gif") || ($extension == "jpg") || ($extension == "jpeg") ||
-                                ($extension == "png") || ($extension == "bmp") || ($extension == "pjpeg")) {
+                                ($extension == "png") || ($extension == "bmp") || ($extension == "pjpeg")
+                            ) {
                                 $fileName = $Time . '_' . $rand_1 . '_' . $rand_2 . '_' . $rand_3 . '_' . $handle->file_src_name_body;
                                 $handle->file_new_name_body = $fileName;
                                 $handle->Process($pfolder);
@@ -144,17 +154,19 @@ subheader('Upload Details', '', '', 'upload'); ?>
                                     $location = $pfolder . "/" . $fileLocation;
                                     $small_location = $sfolder . "/" . $fileLocation;
                                     $size = ceil($handle->file_src_size / 1024);
-                                    $sql = mysqli_query($link, "INSERT INTO `files`(`name`, `location`, `small_location`, `extension`, `size`, `ip`, `date`, `userid`) VALUES('{$name_file}', '{$location}', '{$small_location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$userid}')") or die(mysqli_error($link));
+                                    $sql = mysqli_query($link, "INSERT INTO `files`(`name`, `description`, `location`, `small_location`, `extension`, `size`, `ip`, `date`, `userid`) VALUES('{$name_file}', '', '{$location}', '{$small_location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$userid}')") or die(mysqli_error($link));
                                     $sql_id = mysqli_insert_id($link);
                                     echo "<table class='showlinks'><tr><td id='image'><img src='{$website}/{$small_location}' /></td>";
                                     echo "<td><p class='highlight'><b><a href='{$website}/download.php?id={$sql_id}'>{$name_file}</a></b> has been uploaded</p>";
                                     echo "<table><tr><td><b>Link</b></td><td><input type='text' onclick=\"this.select();\" value=\"<a href='{$website}/download.php?id={$sql_id}'>{$website}/download.php?id={$sql_id}</a>\"></td></tr>";
                                     echo "<tr><td><b>BB Code</b></td><td><input type='text' onclick=\"this.select();\" value=\"[URL={$website}/download.php?id={$sql_id}] [IMG]{$website}/images/labels/{$extension}.png[/IMG][/URL]\"></td></tr></table>";
                                     echo "</td></tr></table>";
-                                } else {
+                                }
+                                else {
                                     echo "<div class='errorbox'><p>Not a valid format<br/><small><b>.{$extension}</b> files are not allowed to be uploaded on {$webtitle}</small></p></div>";
                                 }
-                            } else { // PROCESS REST OF THE FILES OVER HERE.
+                            }
+                            else { // PROCESS REST OF THE FILES OVER HERE.
                                 $fileName = $Time . '_' . $rand_1 . '_' . $rand_2 . '_' . $rand_3 . '_' . $handle->file_src_name_body;
                                 $handle->file_new_name_body = $fileName;
                                 $handle->Process($ffolder);
@@ -163,24 +175,28 @@ subheader('Upload Details', '', '', 'upload'); ?>
                                     $location = $ffolder . '/' . $fileLocation;
                                     $size = ceil($handle->file_src_size / 1024);
                                     $name_file = $handle->file_src_name;
-                                    $sql = mysqli_query($link, "INSERT INTO `files`(`name`, `location`, `extension`, `size`, `ip`, `date`, `userid`) VALUES('{$name_file}', '{$location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$userid}')") or die(mysqli_error($link));
+                                    $sql = mysqli_query($link, "INSERT INTO `files`(`name`, `description`, `location`, `extension`, `size`, `ip`, `date`, `userid`) VALUES('{$name_file}', '', '{$location}', '{$extension}', '{$size}', '{$ip}', '{$date}', '{$userid}')") or die(mysqli_error($link));
                                     $sql_id = mysqli_insert_id($link);
                                     echo "<table class='showlinks'><tr><td id='image'><img src='{$website}/showicon.php?id={$extension}' /></td>";
                                     echo "<td><p class='highlight'><b><a href='{$website}/download.php?id={$sql_id}'>{$name_file}</a></b> has been uploaded</p>";
                                     echo "<table><tr><td><b>Link</b></td><td><input type='text' onclick=\"this.select();\" value=\"<a href='{$website}/download.php?id={$sql_id}'>{$website}/download.php?id={$sql_id}</a>\"></td></tr>";
                                     echo "<tr><td><b>BB Code</b></td><td><input type='text' onclick=\"this.select();\" value=\"[URL={$website}/download.php?id={$sql_id}] [IMG]{$website}/images/labels/{$extension}.png[/IMG][/URL]\"></td></tr></table>";
                                     echo "</td></tr></table>";
-                                } else {
+                                }
+                                else {
                                     echo "<div class='errorbox'><p>Not a valid format<br/><small><b>.{$extension}</b> files are not allowed to be uploaded on {$webtitle}</small></p></div>";
                                 }
                             }
-                        } else {
+                        }
+                        else {
                             echo "<div class='errorbox'><p>An error occured<br/><small>" . $handle->error . "</small></p></div>";
                         }
-                    } else {
+                    }
+                    else {
                         echo "<div class='errorbox'><p>File too big<br/><small>" . $handle->error . "</small></p></div>";
                     }
-                } else {
+                }
+                else {
                     echo "<div class='errorbox'><p>Select a file to upload</p></div>";
                 }
             } // END $SECFILE PROCESSING
@@ -190,7 +206,8 @@ subheader('Upload Details', '', '', 'upload'); ?>
         if ($total == 0) {
             if (isset($_GET['fid'])) {
                 echo "<div class='errorbox'><p>No files uploaded to the folder.</p></div>";
-            } else {
+            }
+            else {
                 echo "<div class='errorbox'><p>You must upload atleast one file.</p></div>";
             }
         }
@@ -202,7 +219,9 @@ subheader('Upload Details', '', '', 'upload'); ?>
             for ($i = 0; $i < ($total); $i++) {
                 echo "<td>" . $pics[$i] . "</td>";
                 $x++;
-                if (($x % 3) == 0) echo "</tr><tr>";
+                if (($x % 3) == 0) {
+                    echo "</tr><tr>";
+                }
             }
             echo "</tr></table>";
         }
@@ -210,7 +229,8 @@ subheader('Upload Details', '', '', 'upload'); ?>
 
         echo "</div>"; // DIV #MAIN IS CLOSED HERE.
 
-    } else {
+    }
+    else {
         echo "<div id='main'><div id='account-header'><p>Upload Details</p></div><div class='errorbox'><p>Please use the upload page for this action.</p></div></div>";
     } ?>
 

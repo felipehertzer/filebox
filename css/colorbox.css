@@ -43,7 +43,7 @@
 #cboxNext{position:absolute; bottom:0; left:27px; background:url(../images/colorbox/controls.png) -50px 0px no-repeat; width:25px; height:25px; text-indent:-9999px;}
 #cboxNext.hover{background-position:-50px -25px;}
 #cboxLoadingOverlay{background:url(../images/colorbox/loading_background.png) center center no-repeat;}
-#cboxLoadingGraphic{background:url(../images/colorbox/working.gif) center center no-repeat;}
+#cboxLoadingGraphic{background:url(../images/colorbox/loading.gif) center center no-repeat;}
 #cboxClose{position:absolute; bottom:0; right:0; background:url(../images/colorbox/controls.png) -25px 0px no-repeat; width:25px; height:25px; text-indent:-9999px;}
 #cboxClose.hover{background-position:-25px -25px;}
 .cboxIE #cboxTopLeft{background:transparent; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../images/colorbox/internet_explorer/borderTopLeft.png, sizingMethod='scale');}
