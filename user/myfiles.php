@@ -336,13 +336,11 @@ subheader('My Files', $css, $js, 'files'); ?>
                 echo "<td class='image'><img src='{$website}/images/labels/folder.png' /></td>";
                 echo "<td class='fileinfo'><p><b><a href='{$website}/user/folder.php?id={$fid}'>{$file_name}</a></b></p><div class='fileinfo'><small>{$folder_count} Folders &nbsp;|&nbsp; {$file_count} Files<span id='text{$fid}' class='noshow'></span></small><div class='hide' id='show{$fid}'><a href='http://twitthis.com/twit?url={$website}/folder.php?id={$fid}' target='_blank'><img src='{$website}/images/icons/twitter_16.png' /></a><a href='http://www.facebook.com/sharer.php?u={$website}/folder.php?id={$fid}&t=Folder Share via {$webtitle}' target='_blank'><img src='{$website}/images/icons/facebook_16.png' /></a><a href='{$website}/email.php?id={$fid}' class='email'><img src='{$website}/images/icons/email.png' /></a></div></div><br/><small>{$d}</small></td></tr>";
             } else {
-                echo "<tr onmouseover=\"showItems('{$fid}');\" onmouseout=\"hideItems('{$fid}');\" id='tr{$fid}'>
-	<td class='checkbox'><input type='checkbox' name='files[]' value='{$fid}' onclick='highlight(this);' /></td>";
+                echo "<tr onmouseover=\"showItems('{$fid}');\" onmouseout=\"hideItems('{$fid}');\" id='tr{$fid}'><td class='checkbox'><input type='checkbox' name='files[]' value='{$fid}' onclick='highlight(this);' /></td>";
                 echo "<td class='image'>";
 
                 // DISPLAY THUMBNAILS FOR IMAGE FILES AND EXTENSION FOR THE OTHER FILES
-                if (($ext == "gif") || ($ext == "jpg") || ($ext == "jpeg") ||
-                    ($ext == "png") || ($ext == "bmp") || ($ext == "pjpeg")) {
+                if (($ext == "gif") || ($ext == "jpg") || ($ext == "jpeg") || ($ext == "png") || ($ext == "bmp") || ($ext == "pjpeg")) {
                     echo "<img src='{$website}/small.php?id={$fid}' />";
                 } else {
                     echo "<img src='{$website}/showicon.php?id={$ext}' />";

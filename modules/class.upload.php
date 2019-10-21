@@ -1438,13 +1438,12 @@ class upload {
         $this->mime_getimagesize        = true;     // MIME detection with getimagesize()
         $this->no_script                = true;     // turns scripts into test files
 
-        $val = preg_replace('/\D/', '', trim(ini_get('upload_max_filesize')));
+        $val = trim(ini_get('upload_max_filesize'));
         $last = strtolower($val{strlen($val)-1});
+        $val = preg_replace('/\D/', '', $val);
         switch($last) {
             case 'g':
-                $val *= 1024;
             case 'm':
-                $val *= 1024;
             case 'k':
                 $val *= 1024;
         }

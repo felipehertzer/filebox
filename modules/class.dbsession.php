@@ -177,7 +177,6 @@ class dbSession
 
         // return the number of found rows
         return $result["count"];
-
     }
 
     /**
@@ -189,7 +188,6 @@ class dbSession
     {
 
         return true;
-
     }
 
     /**
@@ -201,7 +199,6 @@ class dbSession
     {
 
         return true;
-
     }
 
     /**
@@ -241,7 +238,6 @@ class dbSession
 
         // if there was an error return an empty string - this HAS to be an empty string
         return "";
-
     }
 
     /**
@@ -293,7 +289,7 @@ class dbSession
             } else {
 
                 // return an empty string
-                return "";
+                return true;
 
             }
 
@@ -301,7 +297,6 @@ class dbSession
 
         // if something went wrong, return false
         return false;
-
     }
 
     /**
@@ -332,7 +327,6 @@ class dbSession
 
         // if something went wrong, return false
         return false;
-
     }
 
     /**

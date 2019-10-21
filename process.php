@@ -123,8 +123,6 @@ subheader('Upload Details', '', '', 'upload'); ?>
                 if ($_FILES["file" . $i]["error"] != 4) {
                     $handle = new Upload($_FILES["file" . $i]);
 
-                    $handle->file_max_size = $maxFileSize;
-
                     if ($handle->file_src_size < $maxFileSize) {
                         if ($handle->uploaded) {
                             $extension = $handle->file_src_name_ext;
@@ -132,11 +130,8 @@ subheader('Upload Details', '', '', 'upload'); ?>
                             $rand_2 = rand(100000, 100000000);
                             $rand_3 = rand();
 
-
                             // IF UPLOADED FILETYPE IS AN IMAGE, THEN UPLOAD THE FILE AND CREATE THUMBNAILS.
-                            if (($extension == "gif") || ($extension == "jpg") || ($extension == "jpeg") ||
-                                ($extension == "png") || ($extension == "bmp") || ($extension == "pjpeg")
-                            ) {
+                            if (($extension == "gif") || ($extension == "jpg") || ($extension == "jpeg") || ($extension == "png") || ($extension == "bmp") || ($extension == "pjpeg")) {
                                 $fileName = $Time . '_' . $rand_1 . '_' . $rand_2 . '_' . $rand_3 . '_' . $handle->file_src_name_body;
                                 $handle->file_new_name_body = $fileName;
                                 $handle->Process($pfolder);
