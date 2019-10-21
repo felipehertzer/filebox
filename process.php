@@ -165,6 +165,7 @@ subheader('Upload Details', '', '', 'upload'); ?>
                                 $fileName = $Time . '_' . $rand_1 . '_' . $rand_2 . '_' . $rand_3 . '_' . $handle->file_src_name_body;
                                 $handle->file_new_name_body = $fileName;
                                 $handle->Process($ffolder);
+
                                 if ($handle->processed) {
                                     $fileLocation = $Time . '_' . $rand_1 . '_' . $rand_2 . '_' . $rand_3 . '_' . $handle->file_src_name_body . '.' . $handle->file_src_name_ext;
                                     $location = $ffolder . '/' . $fileLocation;

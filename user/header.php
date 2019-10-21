@@ -39,7 +39,7 @@ function subheader($title, $css = "", $js = "", $cl = "")
             if (mysqli_num_rows($query_time)) {
                 $fetch_time = mysqli_fetch_array($query_time);
                 if ($fetch_time['expires_on'] < $current_time) {
-                    $update_membership = mysqli_query($link, "UPDATE `members` SET `premium`=0 WHERE(`id`={$userid})") or die(mysqli_error($link));
+                    $update_membership = mysqli_query($link, "UPDATE `members` SET `premium`= 0 WHERE(`id`={$userid})") or die(mysqli_error($link));
                     // Function for sending mail to the user will come over here.
                     $premium = 0;
                 }

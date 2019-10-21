@@ -22,10 +22,12 @@ $upload_q = mysqli_query($link, "SELECT `id` FROM `uploads` ORDER BY `id` DESC L
 if ($sesslife == true) {
     if ($premium == 1) {
         $maxFileSize = $premium_maxFile;
-    } else {
+    }
+    else {
         $maxFileSize = $normal_maxFile;
     }
-} else {
+}
+else {
     $maxFileSize = $anon_maxFile;
 }
 
@@ -36,7 +38,8 @@ if (mysqli_num_rows($upload_q)) {
     $upload_f = mysqli_fetch_array($upload_q);
     $multicode = $upload_f['id'] + 1;
     $update_mc = mysqli_query($link, "INSERT INTO `uploads`(`date`,`ip_address`,`userid`) VALUES('{$date}', '{$ip}', '{$userid}')") or die(mysqli_error($link));
-} else {
+}
+else {
     $multicode = 1;
     $update_mc = mysqli_query($link, "INSERT INTO `uploads`(`date`,`ip_address`,`userid`) VALUES('{$date}', '{$ip}', '{$userid}')") or die(mysqli_error($link));
 }
@@ -75,7 +78,8 @@ subheader('Upload', $css, $js);
 if ($sesslife == true) {
     if (isset($_GET['v'])) {
         $v = htmlspecialchars(trim($_GET['v']));
-    } else {
+    }
+    else {
         $v = "";
     }
 
@@ -194,8 +198,8 @@ if ($sesslife == true) {
                         </tr>
                     </table>
                     <table id='content'>
-                        <td><a href='#' onClick='document.uploadForm.submit();' class='button'>Upload</a><input
-                                    type='hidden' name='formUpload'/></td>
+                        <tr>
+                            <td><a href='#' onClick='document.uploadForm.submit();' class='button'>Upload</a><input type='hidden' name='formUpload'/></td>
                         </tr>
                     </table>
                 </form>
@@ -207,16 +211,19 @@ if ($sesslife == true) {
             </div>
 
         <?php }
-    } else {
+    }
+    else {
         echo "<div class='global'>";
         if ($premium != 1) {
             echo "<div class='errorbox'><p><b>Disk Space Full</b><br/><small>You have exceeded the amount of disk space you can use. Please upgrade your account to have more disk space and enjoy more benefits over a regular account.</small></p></div>";
-        } else {
+        }
+        else {
             echo "<div class='errorbox'><p><b>Disk Space Full</b><br/><small>You have exceeded the amount of disk space you can use. Please delete few files and free some space for uploading new files.</small></p></div>";
         }
         echo "</div>";
     }
-} else {
+}
+else {
     echo "<meta http-equiv='Refresh' Content='0;URL={$website}/user/login.php' />";
 }
 
